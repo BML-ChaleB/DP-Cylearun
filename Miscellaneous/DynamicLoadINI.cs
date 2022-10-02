@@ -381,6 +381,10 @@ namespace Miscellaneous
                 {
                     ReloadRulesAndArt();
                 }
+                else if(iniName.Contains("INI/"))
+                {
+                    ReloadRulesAndArt();
+                }
                 else
                 {
                     Logger.LogError("{0} unsupported by realtime ini", iniName);
