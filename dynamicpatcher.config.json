@@ -3,5 +3,5 @@
   "try_catch_callable": true,
   "force_gc_collect": false,
   "hide_console": false,
-  "copy_logs": false
+  "copy_logs": true
 }

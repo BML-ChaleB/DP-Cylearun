@@ -20,6 +20,7 @@ using Extension.INI;
 
 namespace Scripts
 {
+    /*
     [Serializable]
     public class SuperWeaponKeeper : TechnoScriptable
     {
@@ -311,4 +312,5 @@ namespace Scripts
         }
 
     }
+    */
 }

@@ -16,7 +16,7 @@ namespace Scripts
     // !!!!!!!!!!!!!!!!!!!!
     // you can use GlobalScriptable everywhere unless your assembly outside DynamicPatcher folder
 
-
+    /*
     [GlobalScriptable(typeof(SuperWeaponExt))]
     public class SuperWeaponRecorder : SuperWeaponScriptable
     {
@@ -82,4 +82,5 @@ namespace Scripts
             }
         }
     }
+    */
 }

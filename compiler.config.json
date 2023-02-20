@@ -16,6 +16,9 @@
     "Extension.FX.dll",
     "Extension.Lua.dll",
     "ScriptUniversal.dll",
+    "Extension.Cylearun.dll",
+    "Scripts",
+    
 
     "Microsoft.VisualStudio.Interop.dll",
     "XLua.Mini"
