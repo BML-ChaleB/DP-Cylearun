@@ -46,11 +46,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestScripts\BlackCatTScript.cs" />
-    <Compile Include="TestScripts\HeightAttackBScript.cs" />
-    <Compile Include="TestScripts\HeightBScript.cs" />
-    <Compile Include="TestScripts\TestAEScript.cs" />
-    <Compile Include="TestScripts\TestBScript.cs" />
-    <Compile Include="TestScripts\TestTScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Extension.Cylearun\Extension.Cylearun.csproj">
