@@ -171,6 +171,48 @@ namespace Extension.Cylearun.Utils
             return vector;
         }
 
+        public static bool CanAffectTarget(Pointer<TechnoClass> techno, Pointer<TechnoClass> target)
+        {
+            var widx = techno.Ref.SelectWeapon(target.Convert<AbstractClass>());
+            var weapon = techno.Ref.GetWeapon(widx);
+            if (weapon.IsNull)
+            {
+                return false;
+            }
+
+            var warhead = weapon.Ref.WeaponType.Ref.Warhead;
+            return MapClass.GetTotalDamage(10000, warhead, target.Ref.Type.Ref.Base.Armor, 0) > 0;
+        }
+
+        public static DirStruct DirAdjustAngle(this DirStruct dir, int angle)
+        {
+            if (angle == 0)
+            {
+                return dir;
+            }
+            var currentVal = (int)dir.Value;
+            var adjust = (short.MaxValue - short.MinValue) / 360 * angle;
+
+            var targetVal = currentVal + adjust;
+            if (targetVal > short.MaxValue)
+            {
+                targetVal = short.MinValue + (targetVal - short.MaxValue);
+            }
+            else if (targetVal < short.MinValue)
+            {
+                targetVal = short.MaxValue - (short.MaxValue + (targetVal - short.MinValue));
+            }
+
+            return new DirStruct(targetVal);
+        }
+
+
+        public static double BigDistanceForm(this CoordStruct source, CoordStruct target)
+        {
+            var square = (source.X / 100d - target.X / 100d) * (source.X / 100d - target.X / 100d) + (source.Y / 100d - target.Y / 100d) * (source.Y / 100d - target.Y / 100d) + (source.Z / 100d - target.Z / 100d) * (source.Z / 100d - target.Z / 100d);
+            return Math.Sqrt(square) * 100;
+
+        }
 
         //public static CoordStruct GetFLH(this TechnoExt technoExt, CoordStruct flh, DirStruct dir, bool flip = false)
         //{
