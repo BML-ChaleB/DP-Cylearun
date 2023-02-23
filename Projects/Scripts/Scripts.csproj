@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DynamicPatcher">
-      <HintPath>..\..\..\..\..\Cylearun\Cylearun-Develop - v0.4.2.01.D\DynamicPatcher.dll</HintPath>
+      <HintPath>..\..\..\DynamicPatcher.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
