@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\FighterAreaGuard.cs" />
+    <Compile Include="Common\ForceLayer.cs" />
     <Compile Include="ExtraUnitScript.cs" />
     <Compile Include="GlobalScripts\AE\AttachEffectScriptable.cs" />
     <Compile Include="GlobalScripts\AE\AttachEffectScriptExtension.cs" />
