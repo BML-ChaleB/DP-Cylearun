@@ -17,11 +17,11 @@
     "Extension.Lua.dll",
     "ScriptUniversal.dll",
     "Extension.Cylearun.dll",
-    "Scripts",
+    "Scripts.dll",
     
 
-    "Microsoft.VisualStudio.Interop.dll",
-    "XLua.Mini"
+    "Microsoft.VisualStudio.Interop.dll"
+    //"XLua.Mini"
   ],
   "preprocessor_symbols": [
     "_USE_ANIM_EXT",
