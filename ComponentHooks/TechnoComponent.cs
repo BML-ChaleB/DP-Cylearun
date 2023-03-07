@@ -17,7 +17,7 @@ namespace ComponentHooks
         {
             try
             {
-                Pointer<TechnoClass> pTechno = (IntPtr)R->ESI;
+                Pointer<TechnoClass> pTechno = (IntPtr)(void*)R->ESI;
 
                 TechnoExt ext = TechnoExt.ExtMap.Find(pTechno);
                 ext.GameObject.Foreach(c => c.OnUpdate());
@@ -36,7 +36,7 @@ namespace ComponentHooks
         {
             try
             {
-                Pointer<TechnoClass> pTechno = (IntPtr)R->ESI;
+                Pointer<TechnoClass> pTechno = (IntPtr)(void*)R->ESI;
 
                 TechnoExt ext = TechnoExt.ExtMap.Find(pTechno);
                 ext.GameObject.Foreach(c => c.OnLateUpdate());
@@ -54,7 +54,7 @@ namespace ComponentHooks
         {
             try
             {
-                Pointer<TechnoClass> pTechno = (IntPtr)R->ECX;
+                Pointer<TechnoClass> pTechno = (IntPtr)(void*)R->ECX;
                 var pCoord = R->Stack<Pointer<CoordStruct>>(0x4);
                 var faceDir = R->Stack<Direction>(0x8);
 
@@ -76,7 +76,7 @@ namespace ComponentHooks
         {
             try
             {
-                Pointer<TechnoClass> pTechno = (IntPtr)R->ECX;
+                Pointer<TechnoClass> pTechno = (IntPtr)(void*)R->ECX;
 
                 TechnoExt ext = TechnoExt.ExtMap.Find(pTechno);
                 ext.GameObject.Foreach(c => (c as IObjectScriptable)?.OnRemove());
@@ -94,7 +94,7 @@ namespace ComponentHooks
         {
             try
             {
-                Pointer<TechnoClass> pTechno = (IntPtr)R->ECX;
+                Pointer<TechnoClass> pTechno = (IntPtr)(void*)R->ECX;
                 var pDamage = R->Stack<Pointer<int>>(0x4);
                 var distanceFromEpicenter = R->Stack<int>(0x8);
                 var pWH = R->Stack<Pointer<WarheadTypeClass>>(0xC);
@@ -119,7 +119,7 @@ namespace ComponentHooks
         {
             try
             {
-                Pointer<TechnoClass> pTechno = (IntPtr)R->ECX;
+                Pointer<TechnoClass> pTechno = (IntPtr)(void*)R->ECX;
                 var pTarget = R->Stack<Pointer<AbstractClass>>(0x4);
                 var nWeaponIndex = R->Stack<int>(0x8);
 
@@ -154,25 +154,25 @@ namespace ComponentHooks
         [Hook(HookType.AresHook, Address = 0x4144B0, Size = 5)]
         static public unsafe UInt32 AircraftClass_Render_Components(REGISTERS* R)
         {
-            Pointer<AircraftClass> pAircraft = (IntPtr)R->ECX;
+            Pointer<AircraftClass> pAircraft = (IntPtr)(void*)R->ECX;
             return TechnoClass_Render_Components(pAircraft.Convert<TechnoClass>());
         }
         [Hook(HookType.AresHook, Address = 0x43D290, Size = 5)]
         static public unsafe UInt32 BuildingClass_Render_Components(REGISTERS* R)
         {
-            Pointer<BuildingClass> pBuilding = (IntPtr)R->ECX;
+            Pointer<BuildingClass> pBuilding = (IntPtr)(void*)R->ECX;
             return TechnoClass_Render_Components(pBuilding.Convert<TechnoClass>());
         }
         [Hook(HookType.AresHook, Address = 0x518F90, Size = 7)]
         static public unsafe UInt32 InfantryClass_Render_Components(REGISTERS* R)
         {
-            Pointer<InfantryClass> pInfantry = (IntPtr)R->ECX;
+            Pointer<InfantryClass> pInfantry = (IntPtr)(void*)R->ECX;
             return TechnoClass_Render_Components(pInfantry.Convert<TechnoClass>());
         }
         [Hook(HookType.AresHook, Address = 0x73CEC0, Size = 5)]
         static public unsafe UInt32 UnitClass_Render_Components(REGISTERS* R)
         {
-            Pointer<UnitClass> pUnit = (IntPtr)R->ECX;
+            Pointer<UnitClass> pUnit = (IntPtr)(void*)R->ECX;
             return TechnoClass_Render_Components(pUnit.Convert<TechnoClass>());
         }
         #endregion

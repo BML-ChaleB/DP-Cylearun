@@ -17,7 +17,7 @@ namespace ComponentHooks
         [Hook(HookType.AresHook, Address = 0x4DB7F7, Size = 6)]
         public static unsafe UInt32 FootClass_In_Which_Layer(REGISTERS* R)
         {
-            Pointer<TechnoClass> pTechno = (IntPtr)R->ESI;
+            Pointer<TechnoClass> pTechno = (IntPtr)(void*)R->ESI;
             TechnoExt ext = TechnoExt.ExtMap.Find(pTechno);
             var gscript = ext.GameObject.GetComponent<TechnoGlobalExtension>();
             if (gscript != null)

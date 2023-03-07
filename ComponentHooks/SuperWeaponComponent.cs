@@ -17,7 +17,7 @@ namespace ComponentHooks
         {
             try
             {
-                Pointer<SuperClass> pSuper = (IntPtr)R->ECX;
+                Pointer<SuperClass> pSuper = (IntPtr)(void*)R->ECX;
                 var pCell = R->Stack<Pointer<CellStruct>>(0x4);
                 var isPlayer = R->Stack<bool>(0x8);
 
