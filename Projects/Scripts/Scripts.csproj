@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestScripts\BlackCatTScript.cs" />
+    <Compile Include="TiberiumAutoGathererScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Extension.Cylearun\Extension.Cylearun.csproj">
