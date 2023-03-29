@@ -1,4 +1,5 @@
-﻿using Extension.Ext;
+﻿using DynamicPatcher;
+using Extension.Ext;
 using Extension.INI;
 using Extension.Script;
 using PatcherYRpp;
@@ -59,7 +60,7 @@ namespace Scripts
 
                         int maxAmountOnce = INI.Data.Amount;
 
-                        amount = (amount > maxAmountOnce) ? (maxAmountOnce - amount) : amount;
+                        amount = (amount > maxAmountOnce) ? maxAmountOnce : amount;
 
                         pCell.Ref.ReduceTiberium((int)amount);
 
@@ -75,7 +76,7 @@ namespace Scripts
                             YRMemory.Create<AnimClass>(AnimTypeClass.ABSTRACTTYPE_ARRAY.Find(INI.Data.AnimGatherer), Owner.OwnerRef.Base.Base.GetCoords() + new CoordStruct(0, 0, INI.Data.AnimZOffest));
                         }
 
-                        Owner.OwnerRef.Owner.Ref.GiveMoney((int)cash);
+                        Owner.OwnerRef.Owner.Ref.TransactMoney((int)cash);
 
 
                         break;
