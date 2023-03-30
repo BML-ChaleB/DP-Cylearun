@@ -55,7 +55,7 @@ namespace Scripts
                 Setting = settingINI.Data.Copy();
                 configInited = true;
             }
-            LastType = Owner.OwnerTypeRef.Base.Base.ID;
+            LastType = Owner.OwnerObject.Ref.Type.Ref.Base.Base.ID;
         }
 
         public override void OnUpdate()
@@ -90,7 +90,7 @@ namespace Scripts
 
             if(Setting.FocusTypeChange)
             {
-                var currentType = Owner.OwnerTypeRef.Base.Base.ID;
+                var currentType = Owner.OwnerObject.Ref.Type.Ref.Base.Base.ID;
                 if (currentType != LastType)
                 {
                     LastType = currentType;
@@ -131,11 +131,12 @@ namespace Scripts
                     if (salveScript == null)
                         continue;
 
-                    if (!salve.OwnerObject.Ref.Base.IsOnMap)
+                    if (!salve.OwnerObject.Ref.Base.IsOnMap && salve.OwnerObject.Ref.Base.InLimbo)
                     {
                        
                         if (!string.IsNullOrEmpty(salveScript.Defination.BindType) && salveScript.Defination.BindType != Owner.OwnerObject.Ref.Type.Ref.Base.Base.ID)
                             continue;
+
 
                         ++Game.IKnowWhatImDoing;
                         salve.OwnerObject.Ref.Base.Put(Owner.OwnerObject.Ref.Base.Base.GetCoords(), GameUtil.Facing2Dir(Owner.OwnerObject.Ref.Facing));
@@ -149,7 +150,9 @@ namespace Scripts
                     else
                     {
                         if (!string.IsNullOrEmpty(salveScript.Defination.BindType) && salveScript.Defination.BindType != Owner.OwnerObject.Ref.Type.Ref.Base.Base.ID)
+                        {
                             salve.OwnerObject.Ref.Base.Remove();
+                        }
                     }
                 }
             }
