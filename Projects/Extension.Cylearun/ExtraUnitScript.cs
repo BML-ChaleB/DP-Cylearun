@@ -27,6 +27,8 @@ namespace Scripts
 
         private bool configInited = false;
 
+        private string LastType;
+
         //额外的构造函数，为了通过脚本直接附加的时候使用
         public ExtraUnitMasterScript(TechnoExt owner, ExtraUnitSetting setting) : base(owner)
         {
@@ -53,10 +55,7 @@ namespace Scripts
                 Setting = settingINI.Data.Copy();
                 configInited = true;
             }
-
-
-
-     
+            LastType = Owner.OwnerTypeRef.Base.Base.ID;
         }
 
         public override void OnUpdate()
@@ -89,6 +88,16 @@ namespace Scripts
 
             }
 
+            if(Setting.FocusTypeChange)
+            {
+                var currentType = Owner.OwnerTypeRef.Base.Base.ID;
+                if (currentType != LastType)
+                {
+                    LastType = currentType;
+                    NeedPut = true;
+                }
+            }
+
             if (NeedPut)
             {
                 NeedPut = false;
@@ -118,8 +127,16 @@ namespace Scripts
             {
                 if (!salve.IsNullOrExpired())
                 {
+                    var salveScript = salve.GameObject.GetComponent<ExtraUnitSalveScript>();
+                    if (salveScript == null)
+                        continue;
+
                     if (!salve.OwnerObject.Ref.Base.IsOnMap)
                     {
+                       
+                        if (!string.IsNullOrEmpty(salveScript.Defination.BindType) && salveScript.Defination.BindType != Owner.OwnerObject.Ref.Type.Ref.Base.Base.ID)
+                            continue;
+
                         ++Game.IKnowWhatImDoing;
                         salve.OwnerObject.Ref.Base.Put(Owner.OwnerObject.Ref.Base.Base.GetCoords(), GameUtil.Facing2Dir(Owner.OwnerObject.Ref.Facing));
                         --Game.IKnowWhatImDoing;
@@ -128,6 +145,11 @@ namespace Scripts
                         {
                             salve.OwnerObject.Ref.TurretFacing.set(Owner.OwnerObject.Ref.Facing.current());
                         }
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(salveScript.Defination.BindType) && salveScript.Defination.BindType != Owner.OwnerObject.Ref.Type.Ref.Base.Base.ID)
+                            salve.OwnerObject.Ref.Base.Remove();
                     }
                 }
             }
@@ -173,7 +195,7 @@ namespace Scripts
         public static int UniqueId = 1145142;
 
         public TechnoExt Master;
-        ExtraUnitDefinationPoco Defination;
+        public ExtraUnitDefinationPoco Defination;
 
         public CoordStruct Position;
 
@@ -532,11 +554,15 @@ namespace Scripts
         [INIField(Key = "ExtraUnit.Definations")]
         public string[] ExtraUnitDefinations;
 
+        [INIField(Key = "ExtraUnit.FocusTypeChange")]
+        public bool FocusTypeChange = false;
+
         public ExtraUnitSettingPoco Copy()
         {
             return new ExtraUnitSettingPoco()
             {
-                ExtraUnitDefinations = this.ExtraUnitDefinations
+                ExtraUnitDefinations = this.ExtraUnitDefinations,
+                FocusTypeChange = this.FocusTypeChange
             };
         }
     }
@@ -611,6 +637,9 @@ namespace Scripts
         [INIField(Key = "ExtraUnit.WorkingHeight")]
         public int WorkingHeight = 0;
 
+        [INIField(Key = "ExtraUnit.BindType")]
+        public string BindType = string.Empty;
+
         public ExtraUnitDefinationPoco Copy()
         {
             return new ExtraUnitDefinationPoco()
@@ -627,7 +656,8 @@ namespace Scripts
                 FacingAngleAdjust = this.FacingAngleAdjust,
                 ForceSameFacing = this.ForceSameFacing,
                 ForceFacingAllowAngle = this.ForceFacingAllowAngle,
-                WorkingHeight = this.WorkingHeight
+                WorkingHeight = this.WorkingHeight,
+                BindType = this.BindType
             };
         }
     }
@@ -637,6 +667,8 @@ namespace Scripts
     public partial class ExtraUnitSettingPoco
     {
         public string[] ExtraUnitDefinations;
+
+        public bool FocusTypeChange;
     }
 
     [Serializable]
@@ -703,6 +735,8 @@ namespace Scripts
         /// 工作的最小高度
         /// </summary>
         public int WorkingHeight = 0;
+
+        public string BindType = string.Empty;
 
     }
 
