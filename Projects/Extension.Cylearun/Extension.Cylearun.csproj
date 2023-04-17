@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\AntiAirHeight.cs" />
     <Compile Include="Common\FighterAreaGuard.cs" />
     <Compile Include="Common\ForceLayer.cs" />
     <Compile Include="ExtraUnitScript.cs" />

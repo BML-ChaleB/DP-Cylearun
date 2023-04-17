@@ -21,11 +21,14 @@ namespace Extension.CY
         {
             INI = this.CreateRulesIniComponentWith<TechnoGlobalTypeExt>(Owner.OwnerObject.Ref.Type.Ref.Base.Base.ID);
             ArtINI = this.CreateArtIniComponentWith<TechnoGlobalArtExt>(!string.IsNullOrEmpty(INI.Data.Image) ? INI.Data.Image : Owner.OwnerObject.Ref.Type.Ref.Base.Base.ID);
+            WeaponINI = this.CreateRulesIniComponentWith<WeaponTypeExt>("Speical");
         }
 
         INIComponentWith<TechnoGlobalTypeExt> INI;
 
         INIComponentWith<TechnoGlobalArtExt> ArtINI;
+
+        INIComponentWith<WeaponTypeExt> WeaponINI;
 
 
         public TechnoGlobalTypeExt Data => INI.Data;
@@ -66,6 +69,12 @@ namespace Extension.CY
             base.OnReceiveDamage(pDamage, DistanceFromEpicenter, pWH, pAttacker, IgnoreDefenses, PreventPassengerEscape, pAttackingHouse);
             PartialHelper.TechnoReceiveDamageAction(this, pDamage, DistanceFromEpicenter, pWH, pAttacker, IgnoreDefenses, PreventPassengerEscape, pAttackingHouse);
         }
+
+    }
+
+    public partial class WeaponTypeExt : INIAutoConfig
+    {
+
     }
 
     [Serializable]
@@ -73,6 +82,8 @@ namespace Extension.CY
     {
         [INIField(Key = "Image")]
         public string Image = string.Empty;
+
+     
     }
 
     [Serializable]
