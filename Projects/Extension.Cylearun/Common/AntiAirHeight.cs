@@ -49,14 +49,10 @@ namespace Extension.CY
                 if (weaponHeight == -1)
                     return true;
 
-                Logger.Log($"当前高度:{currentHeight}，武器高度:{weaponHeight},飞行高度{gscript.Data.FlyingHeightInAir}");
-
                 if (weaponHeight  + currentHeight < gscript.Data.FlyingHeightInAir)
                 {
-                    Logger.Log($"打不到");
                     return false;
                 }
-                Logger.Log($"打的到");
             }
 
             return true;
