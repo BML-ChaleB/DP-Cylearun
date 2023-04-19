@@ -22,6 +22,8 @@ namespace Extension.CY
             INI = this.CreateRulesIniComponentWith<TechnoGlobalTypeExt>(Owner.OwnerObject.Ref.Type.Ref.Base.Base.ID);
             ArtINI = this.CreateArtIniComponentWith<TechnoGlobalArtExt>(!string.IsNullOrEmpty(INI.Data.Image) ? INI.Data.Image : Owner.OwnerObject.Ref.Type.Ref.Base.Base.ID);
             WeaponINI = this.CreateRulesIniComponentWith<WeaponTypeExt>("Speical");
+            DpSettingINI = this.CreateRulesIniComponentWith<GlobalSetting>("DPSetting");
+            LogEnabled = DpSettingINI.Data.LogEnabled;
         }
 
         INIComponentWith<TechnoGlobalTypeExt> INI;
@@ -30,10 +32,21 @@ namespace Extension.CY
 
         INIComponentWith<WeaponTypeExt> WeaponINI;
 
+        INIComponentWith<GlobalSetting> DpSettingINI;
+
+        private bool LogEnabled = false;
+
 
         public TechnoGlobalTypeExt Data => INI.Data;
         public TechnoGlobalArtExt Art => ArtINI.Data;
 
+        public void Log(string message)
+        {
+            if (LogEnabled)
+            {
+                Logger.Log(message);
+            }
+        }
 
         public override void Awake()
         {
@@ -90,6 +103,13 @@ namespace Extension.CY
     public partial class TechnoGlobalArtExt : INIAutoConfig
     {
 
+    }
+
+
+    public partial class GlobalSetting:INIAutoConfig
+    {
+        [INIField(Key = "LogEnabled")]
+        public bool LogEnabled = false;
     }
 
 
