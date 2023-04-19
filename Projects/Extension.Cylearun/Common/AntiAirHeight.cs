@@ -49,7 +49,7 @@ namespace Extension.CY
                 if (weaponHeight == -1)
                     return true;
 
-                if (weaponHeight  + currentHeight < gscript.Data.FlyingZAdjust + Owner.OwnerObject.Ref.Base.Base.GetCoords().Z)
+                if (weaponHeight  + currentHeight < gscript.Data.FlyingZAdjust + pTarget.Ref.GetCoords().Z)
                 {
                     return false;
                 }
