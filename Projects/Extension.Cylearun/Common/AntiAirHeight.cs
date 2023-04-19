@@ -49,7 +49,8 @@ namespace Extension.CY
                 if (weaponHeight == -1)
                     return true;
 
-                Log($"单位高度:{coords.Z},武器高度:{weaponHeight},目标高度:{pTarget.Ref.GetCoords().Z},高度修正:{gscript.Data.FlyingZAdjust}");
+                if(LogEnabled)
+                    Log($"单位高度:{coords.Z},武器高度:{weaponHeight},目标高度:{pTarget.Ref.GetCoords().Z},高度修正:{gscript.Data.FlyingZAdjust}");
 
                 if (weaponHeight  + currentHeight < gscript.Data.FlyingZAdjust + pTarget.Ref.GetCoords().Z)
                 {
