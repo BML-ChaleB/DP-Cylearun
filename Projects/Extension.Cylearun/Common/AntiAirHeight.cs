@@ -37,7 +37,7 @@ namespace Extension.CY
                 if (gscript is null)
                     return true;
 
-                if (gscript.Data.FlyingHeightInAir <= 0)
+                if (gscript.Data.TooHighToBeAttacked == false)
                     return true;
 
                 var coords = Owner.OwnerObject.Ref.Base.Base.GetCoords();
@@ -49,7 +49,7 @@ namespace Extension.CY
                 if (weaponHeight == -1)
                     return true;
 
-                if (weaponHeight  + currentHeight < gscript.Data.FlyingHeightInAir)
+                if (weaponHeight  + currentHeight < gscript.Data.FlyingZAdjust + Owner.OwnerObject.Ref.Base.Base.GetCoords().Z)
                 {
                     return false;
                 }
@@ -66,8 +66,17 @@ namespace Extension.CY
 
     public partial class TechnoGlobalTypeExt
     {
-        [INIField(Key = "FlyingHeightInAir")]
-        public int FlyingHeightInAir = 0;
+        /// <summary>
+        /// 判断高度时的补偿值
+        /// </summary>
+        [INIField(Key = "FlyingZAdjust")]
+        public int FlyingZAdjust = 0;
+
+        /// <summary>
+        /// 是否启用高空逻辑
+        /// </summary>
+        [INIField(Key = "TooHighToBeAttacked")]
+        public bool TooHighToBeAttacked = false;
     }
 
     public partial class WeaponTypeExt
