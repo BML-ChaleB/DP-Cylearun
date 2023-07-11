@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace Scripts
 {
     [Serializable]
+    [ScriptAlias(nameof(SyncSpawnToAmmoScript))]
     public class SyncSpawnToAmmoScript : TechnoScriptable
     {
         public SyncSpawnToAmmoScript(TechnoExt owner) : base(owner)
