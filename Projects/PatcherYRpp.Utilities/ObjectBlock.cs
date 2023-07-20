@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DynamicPatcher;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -102,14 +103,23 @@ namespace PatcherYRpp.Utilities
         }
         private ObjectBlock GetBlockForce(ObjectBlockID id)
         {
-            int xLength = Blocks.GetLength(0);
-            int yLength = Blocks.GetLength(1);
+          
+                int xLength = Blocks.GetLength(0);
+                int yLength = Blocks.GetLength(1);
 
-            // notice that we may have negative id
-            int x = id.X + xLength / 2;
-            int y = id.Y + yLength / 2;
+                // notice that we may have negative id
+                int x = id.X + xLength / 2;
+                int y = id.Y + yLength / 2;
+            try
+            {
+                return x < xLength && y < yLength ? Blocks[x, y] : OuterBlock;
+            }catch(Exception ex)
+            {
+                Logger.LogError(ex);
+                Logger.Log($"Block:({xLength},{yLength}),XY:({x},{y})");
+                return OuterBlock;
+            }
 
-            return x < xLength && y < yLength ? Blocks[x, y] : OuterBlock;
         }
 
         public void ClearObjects()

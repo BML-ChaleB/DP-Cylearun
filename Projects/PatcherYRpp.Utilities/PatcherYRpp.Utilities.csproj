@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DynamicPatcher">
+      <HintPath>..\..\..\DynamicPatcher.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.Interop">
       <HintPath>..\..\Libraries\Microsoft.VisualStudio.Interop.dll</HintPath>
     </Reference>
