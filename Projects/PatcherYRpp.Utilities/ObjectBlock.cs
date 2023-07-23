@@ -110,16 +110,8 @@ namespace PatcherYRpp.Utilities
                 // notice that we may have negative id
                 int x = id.X + xLength / 2;
                 int y = id.Y + yLength / 2;
-            try
-            {
-                return x < xLength && y < yLength ? Blocks[x, y] : OuterBlock;
-            }catch(Exception ex)
-            {
-                Logger.LogError(ex);
-                Logger.Log($"Block:({xLength},{yLength}),XY:({x},{y})");
-                return OuterBlock;
-            }
 
+                return x >= 0 && y >= 0 && x < xLength && y < yLength ? Blocks[x, y] : OuterBlock;
         }
 
         public void ClearObjects()
