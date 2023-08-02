@@ -22,6 +22,7 @@ namespace Extension.CY
             INI = this.CreateRulesIniComponentWith<TechnoGlobalTypeExt>(Owner.OwnerObject.Ref.Type.Ref.Base.Base.ID);
             ArtINI = this.CreateArtIniComponentWith<TechnoGlobalArtExt>(!string.IsNullOrEmpty(INI.Data.Image) ? INI.Data.Image : Owner.OwnerObject.Ref.Type.Ref.Base.Base.ID);
             WeaponINI = this.CreateRulesIniComponentWith<WeaponTypeExt>("Speical");
+            WarheadINI = this.CreateRulesIniComponentWith<WarheadTypeExt>("Speical");
             DpSettingINI = this.CreateRulesIniComponentWith<GlobalSetting>("DPSetting");
             LogEnabled = DpSettingINI.Data.LogEnabled;
         }
@@ -31,6 +32,9 @@ namespace Extension.CY
         INIComponentWith<TechnoGlobalArtExt> ArtINI;
 
         INIComponentWith<WeaponTypeExt> WeaponINI;
+
+        INIComponentWith<WarheadTypeExt> WarheadINI;
+
 
         INIComponentWith<GlobalSetting> DpSettingINI;
 
@@ -86,6 +90,11 @@ namespace Extension.CY
     }
 
     public partial class WeaponTypeExt : INIAutoConfig
+    {
+
+    }
+
+    public partial class WarheadTypeExt : INIAutoConfig
     {
 
     }
