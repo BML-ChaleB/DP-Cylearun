@@ -29,7 +29,7 @@ namespace Scripts.TestScripts
         [INIField(Key = "RefreshSWScript.HasLimit")]
         public bool hasLimit = true;
 
-        [INIField(Key = "RefreshSWScript.canRefreshReady")]
+        [INIField(Key = "RefreshSWScript.CanRefreshReady")]
         public bool canRefreshReady = true;
     }
 
