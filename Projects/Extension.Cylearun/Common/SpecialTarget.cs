@@ -22,9 +22,6 @@ namespace Extension.CY
     {
         [INIField(Key = "SpecialTarget.TotalWarhead")]
         public string TotalWarhead;
-
-        [INIField(Key = "SpecialTarget.NegativeTotalWarhead")]
-        public string NegativeTotalWarhead;
     }
 
     public partial class TechnoGlobalExtension
@@ -43,9 +40,6 @@ namespace Extension.CY
 
             List<string> specialTargetList = Data.SpecialTarget.ToList();
 
-            //设置当前弹头Section
-            WarheadINI.Section = attackWarhead;
-
             //排除结算弹头
             String totalWarhead = DpSettingINI.Data.TotalWarhead;
             if (attackWarhead == totalWarhead)
@@ -53,6 +47,9 @@ namespace Extension.CY
                 Logger.Log($"当前攻击的弹头{attackWarhead}是结算弹头，被排除了");
                 return;
             }
+
+            //设置当前弹头Section
+            WarheadINI.Section = attackWarhead;
 
             //排除脚本中打上的弹头
             List<string> readWarhead = new List<string>();
@@ -99,6 +96,9 @@ namespace Extension.CY
                     Logger.Log($"给当前挨打单位{receiveDamageTechno}打上{readWarhead[i]}弹头");
                     Owner.OwnerObject.Ref.Base.TakeDamage(1, targetWarheadType, pAttacker, pAttackingHouse, false);
 
+                    //设置当前弹头Section
+                    WarheadINI.Section = attackWarhead;
+
                     //double? targetVerses = WarheadINI.Get<double>($"SpecialTarget.{specialTargetList[i]}.Verses");
                     //Logger.Log($"当前弹头{attackWarhead}真实造成的伤害为：{trueDamage} --- 当前读取target比如的key:SpecialTarget.{specialTargetList[i]}.Verses - target比例为：{targetVerses}");
 
@@ -118,6 +118,8 @@ namespace Extension.CY
                     totalDamage += (trueDamage * targetVerses);
                 }
             }
+            //之前会存在多个造成1点伤害的弹头
+            totalDamage -= ((readWarhead.Count + 1) * pDamage.Ref);
 
             Pointer<WarheadTypeClass> totalWarheadType = WarheadTypeClass.ABSTRACTTYPE_ARRAY.Find(totalWarhead);
             Logger.Log($"当前单位{Owner.OwnerObject.Ref.Type.Ref.Base.Base.ID}结算总伤害为：{totalDamage} --- 结算弹头为:{totalWarhead}");
