@@ -172,6 +172,7 @@ namespace Scripts.TestScripts
                     if ((pSuper.Ref.RechargeTimer.GetTimeLeft() + refreshTime) < 0)
                     {
                         Logger.Log($"超武{type.Ref.Base.ID}变更时间小于0，刷新超武");
+                        pSuper.Ref.RechargeTimer.TimeLeft = 0;
                         pSuper.Ref.IsCharged = true;
                         return;
                     }

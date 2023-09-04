@@ -50,6 +50,7 @@
     <Compile Include="RefreshSWScript.cs" />
     <Compile Include="SyncSpawnToAmmoScript.cs" />
     <Compile Include="TestScripts\BlackCatTScript.cs" />
+    <Compile Include="TestScripts\FearEffectBScript.cs" />
     <Compile Include="TiberiumAutoGathererScript.cs" />
   </ItemGroup>
   <ItemGroup>
