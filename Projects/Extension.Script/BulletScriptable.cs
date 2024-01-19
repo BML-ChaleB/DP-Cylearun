@@ -11,6 +11,9 @@ namespace Extension.Script
     public interface IBulletScriptable : IObjectScriptable
     {
         void OnDetonate(Pointer<CoordStruct> pCoords);
+        public void OnUnlimbo(Pointer<CoordStruct> pCoords, Pointer<BulletVelocity> pVelocity);
+        public void OnAIPreDetonate();
+        public void OnAIVelocity(Pointer<BulletVelocity> pSpeed, Pointer<BulletVelocity> pVelocity);
     }
 
 
@@ -39,5 +42,10 @@ namespace Extension.Script
         }
 
         public virtual void OnDetonate(Pointer<CoordStruct> pCoords) { }
+
+        public virtual void OnDetonate(Pointer<CoordStruct> pCoords) { }
+        public virtual void OnUnlimbo(Pointer<CoordStruct> pCoords, Pointer<BulletVelocity> pVelocity) { }
+        public virtual void OnAIPreDetonate() { }
+        public virtual void OnAIVelocity(Pointer<BulletVelocity> pSpeed, Pointer<BulletVelocity> pVelocity) { }
     }
 }
