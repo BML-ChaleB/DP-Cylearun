@@ -58,6 +58,7 @@
     <Compile Include="TechnoExt.cs" />
     <Compile Include="TechnoTypeExt.cs" />
     <Compile Include="WeaponTypeExt.cs" />
+    <Compile Include="TrajectoriesExt.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Extension\Extension.csproj">
