@@ -16,7 +16,7 @@ namespace ComponentHooks
         {
             try
             {
-                Pointer<BulletClass> pBullet = (IntPtr)R->EBX;
+                Pointer<BulletClass> pBullet = (IntPtr)(void*)R->EBX;
                 Pointer<CoordStruct> pCoord = R->Stack<Pointer<CoordStruct>>(0x54 + 0x4);
                 Pointer<BulletVelocity> pVelocity = R->Stack<Pointer<BulletVelocity>>(0x54 + 0x8);
 
@@ -38,7 +38,7 @@ namespace ComponentHooks
             try
             {
                 UInt32 Detonate = 0x467E53;
-                Pointer<BulletClass> pBullet = (IntPtr)R->EBP;
+                Pointer<BulletClass> pBullet = (IntPtr)(void*)R->EBP;
                 var ext = BulletExt.ExtMap.Find(pBullet);
                 bool detonate = false;
                 ITrajectories ITraj = ext.Trajectory;
@@ -64,7 +64,7 @@ namespace ComponentHooks
         {
             try
             {
-                Pointer<BulletClass> pBullet = (IntPtr)R->EBP;
+                Pointer<BulletClass> pBullet = (IntPtr)(void*)R->EBP;
 
                 var ext = BulletExt.ExtMap.Find(pBullet);
 
@@ -84,7 +84,7 @@ namespace ComponentHooks
         {
             try
             {
-                Pointer<BulletClass> pBullet = (IntPtr)R->EBP;
+                Pointer<BulletClass> pBullet = (IntPtr)(void*)R->EBP;
                 Pointer<BulletVelocity> pSpeed = R->lea_Stack<Pointer<BulletVelocity>>(0x1AC - 0x11C);
                 Pointer<BulletVelocity> pPosition = R->lea_Stack<Pointer<BulletVelocity>>(0x1AC - 0x144);
 
@@ -110,7 +110,7 @@ namespace ComponentHooks
             {
                 UInt32 SkipCheck = 0x4678F8, ContinueAfterCheck = 0x467879, Detonate = 0x467E53;
 
-                Pointer<BulletClass> pBullet = (IntPtr)R->EBP;
+                Pointer<BulletClass> pBullet = (IntPtr)(void*)R->EBP;
 
                 var ext = BulletExt.ExtMap.Find(pBullet);
                 ITrajectories ITraj = ext.Trajectory;
@@ -146,8 +146,8 @@ namespace ComponentHooks
             {
                 UInt32 SkipCheck = 0x467A26, ContinueAfterCheck = 0x467514;
 
-                Pointer<BulletClass> pBullet = (IntPtr)R->EBP;
-                Pointer<TechnoClass> pTechno = (IntPtr)R->ESI;
+                Pointer<BulletClass> pBullet = (IntPtr)(void*)R->EBP;
+                Pointer<TechnoClass> pTechno = (IntPtr)(void*)R->ESI;
 
                 var ext = BulletExt.ExtMap.Find(pBullet);
 
