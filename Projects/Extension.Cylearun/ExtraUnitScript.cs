@@ -189,6 +189,20 @@ namespace Scripts
             base.OnRemove();
         }
 
+        public override void OnStopCommand()
+        {
+            foreach (var salve in salveTechnos)
+            {
+                if (!salve.IsNullOrExpired())
+                {
+                    if (!salve.OwnerObject.Ref.Base.IsSelected)
+                    {
+                        salve.OwnerObject.Ref.ClickedEvent(EventType.IDLE);
+                    }
+                }
+            }
+        }
+
     }
 
     [ScriptAlias(nameof(ExtraUnitSalveScript))]
