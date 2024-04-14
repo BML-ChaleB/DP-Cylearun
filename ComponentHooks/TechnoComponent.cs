@@ -138,7 +138,7 @@ namespace ComponentHooks
         [Hook(HookType.AresHook, Address = 0x730EEB, Size = 6)]
         public static unsafe UInt32 ObjectClass_StopCommand(REGISTERS* R)
         {
-            Pointer<ObjectClass> pObject = (IntPtr)R->ESI;
+            Pointer<ObjectClass> pObject = (IntPtr)(void*)R->ESI;
             if (pObject.CastToTechno(out Pointer<TechnoClass> pTechno))
             {
                 // Logger.Log("{0} Stop Command", pTechno.IsNull ? "Unknow" : pTechno.Ref.Type.Ref.Base.Base.ID);
