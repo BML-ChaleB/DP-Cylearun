@@ -376,6 +376,12 @@ namespace Extension.Components
             //return GetComponent(typeof(TComponent)) as TComponent;
         }
 
+        public bool TryGetComponent<TComponent>(out TComponent Component) where TComponent : Component
+        {
+            Component = GetComponent<TComponent>();
+            return null != Component;
+        }
+
         /// <summary>
         /// get component that match predicate in all children
         /// </summary>
