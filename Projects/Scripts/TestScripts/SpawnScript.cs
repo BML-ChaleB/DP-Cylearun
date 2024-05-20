@@ -26,6 +26,7 @@ namespace Scripts
     }
 
     [Serializable]
+    [ScriptAlias(nameof(SpawnScript))]
     public class SpawnScript : TechnoScriptable
     {
         public SpawnScript(TechnoExt owner) : base(owner)

@@ -7,6 +7,7 @@ using DynamicPatcher;
 using PatcherYRpp;
 using Extension.Ext;
 using Extension.Script;
+using Scripts;
 
 namespace ExtensionHooks
 {
@@ -52,7 +53,7 @@ namespace ExtensionHooks
             Pointer<TechnoClass> pTechno = ppFoot.Ref.Convert<TechnoClass>();
 
             TechnoExt ext = null;
-            if (pTechno.IsNotNull && !IsDeadOrInvisible(pTechno) && null != (ext = TechnoExt.ExtMap.Find(pTechno)) && ext.GameObject.TryGetComponent(out SpawnScript Comp) && Comp.InLanding)
+            if (pTechno.IsNotNull && !SpawnScript.IsDeadOrInvisible(pTechno) && null != (ext = TechnoExt.ExtMap.Find(pTechno)) && ext.GameObject.TryGetComponent(out SpawnScript Comp) && Comp.InLanding)
             {
                 return 0x4CCBCF;
             }
