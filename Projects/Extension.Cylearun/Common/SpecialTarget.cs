@@ -4,11 +4,7 @@ using Extension.INI;
 using PatcherYRpp;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Extension.CY
 {
@@ -43,6 +39,7 @@ namespace Extension.CY
         [ReceiveDamageAction]
         public unsafe void TechnoClass_ReceiveDamage_SpecialTarget(Pointer<int> pDamage, int DistanceFromEpicenter, Pointer<WarheadTypeClass> pWH, Pointer<ObjectClass> pAttacker, bool IgnoreDefenses, bool PreventPassengerEscape, Pointer<HouseClass> pAttackingHouse)
         {
+            Log("Speial Target 挨打了");
             if (Data.SpecialTarget == null || Data.SpecialTarget.Length < 1)
             {
                 return;
@@ -50,7 +47,7 @@ namespace Extension.CY
 
             string attackWarhead = pWH.Ref.Base.ID;
             string receiveDamageTechno = Owner.OwnerObject.Ref.Type.Ref.Base.Base.ID;
-            Logger.Log($"脚本开始 --- 当前挨打单位{receiveDamageTechno},攻击的弹头{attackWarhead},攻击的伤害{pDamage.Ref}");
+           Log($"脚本开始 --- 当前挨打单位{receiveDamageTechno},攻击的弹头{attackWarhead},攻击的伤害{pDamage.Ref}");
 
             List<string> specialTargetList = Data.SpecialTarget.ToList();
 
@@ -67,14 +64,14 @@ namespace Extension.CY
                 //Logger.Log($"当前读取的目标类型{specialTargetList[i]}");
 
                 string targetWarhead = WarheadINI.Get<String>($"SpecialTarget.{specialTargetList[i]}.Warhead");
-                Logger.Log($"当前读取弹头的Key:{$"SpecialTarget.{specialTargetList[i]}.Warhead"} --- 读取到的弹头信息:{targetWarhead}");
+               Log($"当前读取弹头的Key:{$"SpecialTarget.{specialTargetList[i]}.Warhead"} --- 读取到的弹头信息:{targetWarhead}");
 
                 //排除未写特殊攻击的弹头
                 if (!string.IsNullOrEmpty(targetWarhead))
                 {
                     if (attackWarhead == targetWarhead)
                     {
-                        Logger.Log($"当前攻击的弹头{attackWarhead}和读取弹头{targetWarhead}是套娃弹头,不许套娃");
+                       Log($"当前攻击的弹头{attackWarhead}和读取弹头{targetWarhead}是套娃弹头,不许套娃");
                         continue;
                     }
 
@@ -83,7 +80,7 @@ namespace Extension.CY
                 }
 
                 double targetVerses = WarheadINI.Get<double>($"SpecialTarget.{specialTargetList[i]}.Verses");
-                Logger.Log($"当前读取弹头的Key:{$"SpecialTarget.{specialTargetList[i]}.Verses"} --- 读取到的弹头比例:{targetVerses}");
+               Log($"当前读取弹头的Key:{$"SpecialTarget.{specialTargetList[i]}.Verses"} --- 读取到的弹头比例:{targetVerses}");
 
                 if (0 != targetVerses)
                 {
@@ -100,7 +97,7 @@ namespace Extension.CY
             //排除未写特殊攻击的弹头
             if (argsList.Count < 1)
             {
-                Logger.Log($"当前攻击的弹头{attackWarhead}不是特殊攻击弹头，被排除了");
+               Log($"当前攻击的弹头{attackWarhead}不是特殊攻击弹头，被排除了");
                 return;
             }
 
@@ -112,13 +109,13 @@ namespace Extension.CY
             for (int i = 0; i < argsList.Count; i++)
             {
                 SpecialTargetArgs args = argsList[i];
-                Logger.Log($"当前读取的第:{i+1}个args: traget = {args.target}, DamageFlag = {args.DamageFlag}, Damage = {args.Damage}, warheadFlag = {args.warheadFlag}, warhead = {args.warhead}");
+               Log($"当前读取的第:{i+1}个args: traget = {args.target}, DamageFlag = {args.DamageFlag}, Damage = {args.Damage}, warheadFlag = {args.warheadFlag}, warhead = {args.warhead}");
 
                 if (args.DamageFlag)
                 {
-                    Logger.Log($"当前攻击伤害调整前为{pDamage.Ref},调整比例{args.Damage}");
+                   Log($"当前攻击伤害调整前为{pDamage.Ref},调整比例{args.Damage}");
                     pDamage.Ref = (int)(pDamage.Ref * args.Damage);
-                    Logger.Log($"当前攻击伤害调整为{pDamage.Ref}");
+                   Log($"当前攻击伤害调整为{pDamage.Ref}");
                 }
 
                 if (args.warheadFlag)
@@ -129,11 +126,11 @@ namespace Extension.CY
 
             //记录总伤害
             double totalDamage = pDamage.Ref;
-            Logger.Log($"计算后的总伤害{totalDamage}");
+           Log($"计算后的总伤害{totalDamage}");
 
             if (readWarheadList.Count < 1)
             {
-                Logger.Log($"当前不存在特殊弹头目标");
+               Log($"当前不存在特殊弹头目标");
                 return;
             }
 
@@ -146,7 +143,7 @@ namespace Extension.CY
 
                 if (targetWarheadType.IsNotNull)
                 {
-                    Logger.Log($"当前为第{i + 1}个弹头,还有{readWarheadList.Count - (i + 1)}个弹头未打");
+                   Log($"当前为第{i + 1}个弹头,还有{readWarheadList.Count - (i + 1)}个弹头未打");
 
                     double localDamage = 0;
 
@@ -163,7 +160,7 @@ namespace Extension.CY
                         localDamage = totalDamage;
                     }
 
-                    Logger.Log($"当前单位{Owner.OwnerObject.Ref.Type.Ref.Base.Base.ID}结算总伤害为：{localDamage} --- 结算抛射体为:{totalProject} 结算弹头为:{readWarheadList[i]}");
+                   Log($"当前单位{Owner.OwnerObject.Ref.Type.Ref.Base.Base.ID}结算总伤害为：{localDamage} --- 结算抛射体为:{totalProject} 结算弹头为:{readWarheadList[i]}");
 
                     //取消原来直接打伤害
                     //Owner.OwnerObject.Ref.Base.TakeDamage((int)localDamage, totalWarheadType, pAttacker, pAttackingHouse, false);
