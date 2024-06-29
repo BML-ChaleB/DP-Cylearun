@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Extension.Components;
 using Extension.EventSystems;
+using Extension.CY.Network;
 
 namespace GeneralHooks
 {
@@ -71,5 +72,14 @@ namespace GeneralHooks
 
             return 0;
         }
+
+        [Hook(HookType.AresHook, Address = 0x533066, Size = 6)]
+        public static unsafe UInt32 CommandClassCallback_Register(REGISTERS* R)
+        {
+            Command.Register();
+            return 0;
+        }
+
+
     }
 }
