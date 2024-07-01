@@ -22,6 +22,33 @@ namespace Extension.Ext
         {
         }
 
+
+        public ref AbstractClass BaseAbstract => ref OwnerRef.BaseAbstract;
+        public ref ObjectClass BaseObject => ref OwnerRef.Base;
+        public ref MissionClass BaseMission => ref OwnerRef.BaseMission;
+        public ref FootClass FootRef => ref OwnerObject.Convert<FootClass>().Ref;
+        public ref UnitClass UnitRef => ref OwnerObject.Convert<UnitClass>().Ref;
+        public ref InfantryClass InRef => ref OwnerObject.Convert<InfantryClass>().Ref;
+        public ref AircraftClass AirRef => ref OwnerObject.Convert<AircraftClass>().Ref;
+        public ref BuildingClass BuildingRef => ref OwnerObject.Convert<BuildingClass>().Ref;
+        public ref VeterancyStruct Veterancy => ref OwnerRef.Veterancy;
+        public ref HouseClass HouseRef => ref OwnerRef.Owner.Ref;
+        public int HouseIndex { get => HouseRef.ArrayIndex; }
+        public bool Select { get => BaseObject.IsSelected; set => _select(value); }
+        public CoordStruct Pos { get => OwnerRef.BaseAbstract.GetCoords(); set => OwnerRef.Base.SetLocation(value); }
+        public Pointer<HouseClass> pHouse { get => OwnerRef.Owner; set => OwnerRef.SetOwningHouse(value); }
+        public Pointer<AbstractClass> pTarget { get => OwnerRef.Target; set => OwnerRef.SetTarget(value); }
+        public Mission CurrentMission { get => BaseMission.CurrentMission; }
+        public ref AbstractClass TargetRef => ref pTarget.Ref;
+        public ILocomotion Locomotor => FootRef.Locomotor;
+        public void _select(bool select)
+        {
+            if (select)
+                BaseObject.Select();
+            else
+                BaseObject.Deselect();
+        }
+
         public override void OnDeserialization(object sender)
         {
             base.OnDeserialization(sender);
