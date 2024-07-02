@@ -19,7 +19,7 @@ namespace Scripts
         public int BackSpeed = 40;
 
         [INIField(Key = "LandingBuffer")]
-        public int LandingBuffer = 15;
+        public int LandingBuffer = 35;
 
         [INIField(Key = "LandingRange")]
         public int LandingRange = 500;
@@ -76,7 +76,7 @@ namespace Scripts
             Pointer<TechnoClass> pSpawnOwner;
 
             if (!IsDeadOrInvisible(pSpawnOwner = Owner.OwnerRef.SpawnOwner) 
-                && (Owner.Locomotor.ToLocomotionClass<FlyLocomotionClass>()).IsNotNull 
+                && Owner.Locomotor.ToLocomotionClass<FlyLocomotionClass>().IsNotNull 
                 && Owner.FootRef.Destination.IsNotNull 
                 && SpawnIndex >= 0 
                 && pSpawnOwner.Ref.SpawnManager.Ref.SpawnedNodes[SpawnIndex].Ref.Status == 4)
