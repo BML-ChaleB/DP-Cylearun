@@ -12,10 +12,10 @@ namespace Extension.INI
 {
     public static class INIConstant
     {
-        public static string AiName { get; set; } = "aicy.ini";
-        public static string ArtName { get; set; } = "artcy.ini";
-        public static string RulesName { get; set; } = "rulescy.ini";
-        public static string Ra2md { get; set; } = "ra2cy.ini";
+        public static string AiName { get; set; } = "ailc.ini";
+        public static string ArtName { get; set; } = "artlc.ini";
+        public static string RulesName { get; set; } = "ruleslc.ini";
+        public static string Ra2md { get; set; } = "ra2lc.ini";
 
         public static string GameModeName => _gameModeName;
         public static string MapName => ScenarioClass.Instance.FileName;
