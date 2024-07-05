@@ -7,6 +7,7 @@ using DynamicPatcher;
 using PatcherYRpp;
 using Extension.Ext;
 using Extension.Script;
+using Scripts;
 
 namespace ExtensionHooks
 {
@@ -42,5 +43,39 @@ namespace ExtensionHooks
         {
             return TechnoExt.TechnoClass_Save_Suffix(R);
         }
+
+                [Hook(HookType.AresHook, Address = 0x4CCB42, Size = 5)]
+        public static unsafe UInt32 FlyLocomotionClass_Skip1(REGISTERS* R)
+        {
+
+            Pointer<Pointer<FootClass>> ppFoot = (IntPtr)(void*)R->ESP + 0x8 + 0x4 + 0x8;
+
+            Pointer<TechnoClass> pTechno = ppFoot.Ref.Convert<TechnoClass>();
+
+            TechnoExt ext = null;
+            if (pTechno.IsNotNull && !SpawnScript.IsDeadOrInvisible(pTechno) && null != (ext = TechnoExt.ExtMap.Find(pTechno)) && ext.GameObject.TryGetComponent(out SpawnScript Comp) && Comp.InLanding)
+            {
+                return 0x4CCBCF;
+            }
+
+            return 0;
+        }
+
+        [Hook(HookType.AresHook, Address = 0x6B74F0, Size = 10)]
+        public static unsafe UInt32 BuildingClass_Sell_SetSpeedType2(REGISTERS* R)
+        {
+            Pointer<SpawnManagerClass> pSpawnManager = (IntPtr)(void*)R->ESI;
+
+            uint Index = R->EBX;
+
+            Pointer<TechnoClass> sth = pSpawnManager.Ref.SpawnedNodes[(int)Index].Ref.Unit;
+            var ext = TechnoExt.ExtMap.Find(sth);
+            if(null != ext && ext.GameObject.TryGetComponent(out SpawnScript Comp))
+            {
+                Comp.SpawnIndex = (int)Index;
+            }
+            return 0;
+        }
+
     }
 }

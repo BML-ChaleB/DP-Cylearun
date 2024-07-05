@@ -61,6 +61,11 @@
     <Compile Include="Utils\FLHHelper.cs" />
     <Compile Include="Utils\GameUtil.cs" />
     <Compile Include="Utils\YRObjectHepler.cs" />
+    <Compile Include="Network\IEventHandler.cs" />
+    <Compile Include="Network\Network.cs" />
+    <Compile Include="Network\NetworkHandlers.cs" />
+    <Compile Include="Network\NewDummyCommand.cs" />
+    <Compile Include="Network\Commands\TestCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Extension.Ext\Extension.Ext.csproj">

@@ -315,5 +315,20 @@ namespace PatcherYRpp.Utilities
         }
 
         #endregion
+
+
+        public const double BINARY_ANGLE_MAGIC = -(360.0 / (65535 - 1)) * (Math.PI / 180);
+        public static DirStruct Point2Dir(this CoordStruct Offset)
+        {
+            double radians = Math.Atan2(Offset.Y, -Offset.X);
+            radians -= MathEx.Deg2Rad(90);
+            return Radians2Dir(radians);
+        }
+        public static DirStruct Radians2Dir(double radians)
+        {
+            short d = (short)(radians / BINARY_ANGLE_MAGIC);
+            return new DirStruct(d);
+        }
+
     }
 }
