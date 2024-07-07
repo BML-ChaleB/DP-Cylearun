@@ -29,6 +29,7 @@ namespace Miscellaneous
         static string[] ignoreList = new[]
         {
             "ra2md.ini",
+            "ra2cy.ini",
             // reshader
             "reshade.ini",
             "DefaultPreset.ini"

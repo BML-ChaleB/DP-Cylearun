@@ -22,6 +22,31 @@ namespace Extension.Ext
         {
         }
 
+        public ref AbstractClass BaseAbstract => ref OwnerRef.Base.Base;
+        public ref ObjectClass BaseObject => ref OwnerRef.Base;
+
+        public Pointer<AbstractClass> pAbstract => OwnerObject.Convert<AbstractClass>();
+        public Pointer<ObjectClass> pObject => OwnerObject.Convert<ObjectClass>();
+
+        public bool HasOwner => OwnerRef.Owner.IsNotNull;
+        public ref Pointer<TechnoClass> TechnoOwner => ref OwnerRef.Owner;
+        public ref TechnoClass TechnoRef => ref OwnerRef.Owner.Ref;
+        public ref HouseClass HouseRef => ref OwnerRef.Owner.Ref.Owner.Ref;
+        public Pointer<HouseClass> pHouse => OwnerRef.Owner.Ref.Owner;
+        public int HouseIndex => HouseRef.ArrayIndex;
+        public CoordStruct Pos { get => BaseAbstract.GetCoords(); set => OwnerRef.Base.SetLocation(value); }
+        public ref BulletVelocity Velocity => ref OwnerRef.Velocity;
+        public ref CoordStruct SourceCoords => ref OwnerRef.SourceCoords;
+        public ref CoordStruct TargetCoords => ref OwnerRef.TargetCoords;
+
+        public Pointer<AbstractClass> pTarget { get => OwnerRef.Target; set => OwnerRef.SetTarget(value); }
+        public ref AbstractClass TargetRef => ref pTarget.Ref;
+        public bool HasTarget => OwnerRef.Target.IsNotNull;
+
+        public CoordStruct TargetPos => pTarget.Ref.GetCoords();
+
+
+
         public override void SaveToStream(IStream stream)
         {
             base.SaveToStream(stream);

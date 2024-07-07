@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Extension.INI;
 
 namespace Extension.Script
 {
@@ -32,8 +33,18 @@ namespace Extension.Script
 
         public virtual void OnStopCommand()
         {
-            
+
         }
     }
 
+    [Serializable]
+    public class TechnoScriptable<TData> : TechnoScriptable where TData : INIAutoConfig, new()
+    {
+        public TechnoScriptable(TechnoExt owner) : base(owner)
+        {
+            Data = this.CreateRulesIniComponentWith<TData>(Owner.OwnerObject.Ref.Type.Ref.Base.Base.ID).Data;
+        }
+        public TData Data;
+
+    }
 }
