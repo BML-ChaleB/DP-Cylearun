@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Extension.Utilities;
 using PatcherYRpp;
+using System.Reflection;
 
 namespace Extension.INI
 {
@@ -45,6 +46,13 @@ namespace Extension.INI
                 return Parsers.GetEnumParserUnsafe<T>();
             }
 
+            INIParserAttribute INIParser;
+            if (null != (INIParser = typeof(T).GetCustomAttribute<INIParserAttribute>()) && Activator.CreateInstance(INIParser.Parser) is IParser<T> NewParser)
+            {
+                Parsers.AddParser<T>(parser);
+                return NewParser;
+            }
+
             return null;
         }
 
@@ -60,4 +68,15 @@ namespace Extension.INI
             return false;
         }
     }
+
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
+    public sealed class INIParserAttribute : Attribute
+    {
+        public INIParserAttribute(Type Parser)
+        {
+            this.Parser = Parser;
+        }
+        public Type Parser { get; }
+    }
+
 }
