@@ -84,8 +84,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoEnterTankBunkerScript.cs" />
     <Compile Include="Modes\CricketControlScript.cs" />
     <Compile Include="Modes\GIDeployScript.cs" />
+    <Compile Include="AttackBeaconTargetScript.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RefreshSWScript.cs" />
     <Compile Include="SyncSpawnToAmmoScript.cs" />

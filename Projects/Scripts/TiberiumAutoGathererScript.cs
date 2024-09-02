@@ -56,7 +56,7 @@ namespace Scripts
                     {
 
                         var index = pCell.Ref.GetContainedTiberiumIndex();
-                        var amount = value / (index == 0 ? 25f : 50f);
+                        var amount = value / ((index == 0 || index == 2) ? 25f : 50f);
 
                         int maxAmountOnce = INI.Data.Amount;
 
@@ -64,7 +64,7 @@ namespace Scripts
 
                         pCell.Ref.ReduceTiberium((int)amount);
 
-                        var cash = amount * (index == 0 ? 25f : 50f) * INI.Data.GatherMultipler;
+                        var cash = amount * ((index == 0 || index == 2) ? 25f : 50f) * INI.Data.GatherMultipler;
 
                         if(!string.IsNullOrEmpty(INI.Data.AnimTiberium))
                         {
