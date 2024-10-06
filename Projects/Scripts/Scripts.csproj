@@ -84,6 +84,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AE\VeterancyChangeAttachEffectScript.cs" />
     <Compile Include="AutoEnterTankBunkerScript.cs" />
     <Compile Include="Modes\CricketControlScript.cs" />
     <Compile Include="Modes\GIDeployScript.cs" />
