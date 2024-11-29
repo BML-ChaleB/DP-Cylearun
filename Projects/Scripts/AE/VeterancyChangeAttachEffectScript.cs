@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Scripts.AE
 {
+    [ScriptAlias(nameof(VeterancyChangeAttachEffectScript))]
     public class VeterancyChangeAttachEffectScript : AttachEffectScriptable
     {
         public VeterancyChangeAttachEffectScript(TechnoExt owner) : base(owner)
