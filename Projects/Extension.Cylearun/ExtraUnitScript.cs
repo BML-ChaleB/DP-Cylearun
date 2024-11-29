@@ -71,10 +71,10 @@ namespace Scripts
                     salveIni.Section = item;
                     var defination = salveIni.Data;
                     var type = TechnoTypeClass.ABSTRACTTYPE_ARRAY.Find(defination.ExtraUnitType);
-                    if (type == null)
+                    if (type.IsNull)
                         continue;
                     var techno = type.Ref.Base.CreateObject(Owner.OwnerObject.Ref.Owner).Convert<TechnoClass>();
-                    if (techno == null)
+                    if (techno.IsNull)
                         continue;
                     var technoExt = TechnoExt.ExtMap.Find(techno);
                     if (technoExt.IsNullOrExpired())

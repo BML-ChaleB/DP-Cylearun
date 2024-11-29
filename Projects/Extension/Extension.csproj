@@ -72,6 +72,8 @@
     <Compile Include="Ext\MapContainer.cs" />
     <Compile Include="Ext\FixedListContainer.cs" />
     <Compile Include="Ext\TypeExtension.cs" />
+    <Compile Include="Ext\SingleContainer.cs" />
+    <Compile Include="Ext\SingleExtension.cs" />
     <Compile Include="GlobalVars.cs" />
     <Compile Include="INI\BasicStructureParser.cs" />
     <Compile Include="INI\EnumParser.cs" />
