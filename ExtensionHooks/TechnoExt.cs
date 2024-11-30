@@ -7,6 +7,7 @@ using DynamicPatcher;
 using PatcherYRpp;
 using Extension.Ext;
 using Extension.Script;
+using Extension.CY;
 using Scripts;
 
 namespace ExtensionHooks
@@ -76,6 +77,22 @@ namespace ExtensionHooks
             }
             return 0;
         }
+
+        [Hook(HookType.AresHook, Address = 0x43E7B0, Size = 5)]
+        public static unsafe UInt32 BuildingClass_DrawVisible(REGISTERS* R)
+        {
+            Pointer<BuildingClass> pThis = (IntPtr)R->ECX;
+
+            TechnoExt ext = TechnoExt.ExtMap.Find(pThis.Cast<TechnoClass>());
+            var gscript = ext.GameObject.GetComponent<TechnoGlobalExtension>();
+            if (gscript != null)
+            {
+                gscript.DrawFactoryProcess(R);
+            }
+
+            return 0;
+        }
+
 
     }
 }

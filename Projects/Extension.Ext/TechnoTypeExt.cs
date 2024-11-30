@@ -94,6 +94,56 @@ namespace Extension.Ext
             TechnoTypeExt.ExtMap.SaveStatic();
             return 0;
         }
+        private IConfigWrapper<TechnoArtConfig> m_artData;
+        public TechnoArtConfig ArtData
+        {
+            get
+            {
+                if (m_artData == null)
+                {
+                    m_artData = Ini.GetConfig<TechnoArtConfig>(Ini.ArtDependency, Data.Image == null ? OwnerRef.BaseAbstractType.ID : Data.Image);
+                }
+                return m_artData.Data;
+            }
+        }
+
+        private IConfigWrapper<TechnoRulesConfig> m_data;
+        public TechnoRulesConfig Data
+        {
+            get
+            {
+                if (m_data == null)
+                {
+                    m_data = Ini.GetConfig<TechnoRulesConfig>(Ini.RulesDependency, OwnerRef.BaseAbstractType.ID);
+                }
+                return m_data.Data;
+            }
+        }
+
+    }
+
+    [Serializable]
+    public class TechnoArtConfig : INIAutoConfig
+    {
+        [INIField(Key = "Cameo")]
+        public string Cameo;
+        [INIField(Key = "AltCameo")]
+        public string AltCameo;
+
+        [INIField(Key = "CameoPCX")]
+        public string CameoPCX;
+        [INIField(Key = "AltCameoPCX")]
+        public string AltCameoPCX;
+
+    }
+
+    [Serializable]
+    public class TechnoRulesConfig : INIAutoConfig
+    {
+        [INIField(Key = "Image")]
+
+        public string Image;
+
     }
 
 }

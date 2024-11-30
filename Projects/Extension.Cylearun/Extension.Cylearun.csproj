@@ -55,8 +55,12 @@
     <Compile Include="GlobalScripts\AE\AttachEffectScriptable.cs" />
     <Compile Include="GlobalScripts\AE\AttachEffectScriptExtension.cs" />
     <Compile Include="PartialHelper.cs" />
+    <Compile Include="ExtraInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TechnoGlobalExtension.cs" />
+    <Compile Include="UI\CCForm.cs" />
+    <Compile Include="UI\CCControl.cs" />
+    <Compile Include="UI\CurrentObjectInfoControl.cs" />
     <Compile Include="Utils\Finder.cs" />
     <Compile Include="Utils\FLHHelper.cs" />
     <Compile Include="Utils\GameUtil.cs" />
