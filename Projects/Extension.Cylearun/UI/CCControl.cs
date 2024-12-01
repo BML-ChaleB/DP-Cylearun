@@ -66,5 +66,7 @@ namespace Extension.Cylearun.UI
 
     public abstract class CCControl : CCControlBase
     {
+        public virtual bool IsMouseHoving(Point2D mousePos) { return Rectangle.InRect(mousePos); }
+        public virtual void OnLeftRelease(Point2D mousePos) { }
     }
 }
