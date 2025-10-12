@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Extension.Components;
 using Extension.EventSystems;
 using Extension.CY.Network;
+using Extension.Cylearun.UI;
 
 namespace GeneralHooks
 {
@@ -105,5 +106,32 @@ namespace GeneralHooks
             pRect.Ref.Y = 0;
             return 0;
         }
+
+        [Hook(HookType.AresHook, Address = 0x4F4583, Size = 6)]
+        public static unsafe UInt32 GScreenClass_DrawOnTop_TheDarkSideOfTheMoon(REGISTERS* R)
+        {
+            CCForm.Process();
+            return 0;
+        }
+
+        [Hook(HookType.AresHook, Address = 0x692610, Size = 8)]
+        public static unsafe UInt32 MouseClass_UpdateCursor(REGISTERS* R)
+        {
+            if (CCForm.UpdateCursor())
+            {
+                R->EAX = 0;
+                return 0x69264A;
+            }
+            return 0;
+        }
+
+        [Hook(HookType.AresHook, Address = 0x693290, Size = 6)]
+        public static unsafe UInt32 MouseClass_LeftRelease(REGISTERS* R)
+        {
+            CCForm.LeftRelease();
+            return 0;
+        }
+
+
     }
 }

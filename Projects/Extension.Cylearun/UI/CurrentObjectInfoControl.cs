@@ -21,12 +21,146 @@ namespace Extension.Cylearun.UI
         {
         }
 
+        private void RenderEmpty(Pointer<Surface> pSurface)
+        {
+            Rectangle = RectangleStruct.FromBottomLeft(Rectangle.BottomLeft, (100, 100));
+            if (!PCXPointer.BlitCameo("lightconepcx.pcx", Location, pSurface))
+            {
+                Rectangle = RectangleStruct.FromBottomLeft(Rectangle.BottomLeft, (0, 0));
+            }
+        }
+
         protected override void OnRender(Pointer<Surface> pSurface)
         {
-            Point2D pos = Location;
-            foreach (var p in Get())
+            if (ObjectClass.CurrentObjects.Count == 0)
             {
+                RenderEmpty(pSurface);
+                return;
+            }
+
+
+            Point2D pos = Location;
+
+
+
+            int maxCount = Surface.ViewBound.Width / 60 - 3;
+            Point2D mousePos = CCForm.GetMouseCoords();
+
+            List<TypeValuePair> list = Get();
+            if (ObjectClass.CurrentObjects.Count == 1)
+            {
+                Rectangle = RectangleStruct.FromBottomLeft(Rectangle.BottomLeft, (220, 100));
+                Drawer.FillRectBevel(pSurface, Rectangle, (31, 31, 31));
+                Drawer.FillRectBevel(pSurface, (Location.X, Location.Y, Rectangle.Width, 5), (61, 61, 61), buttomLeft: false, buttomRight: false);
+
+                int health = ObjectClass.CurrentObjects[0].Ref.Health;
+                int strength = ObjectClass.CurrentObjects[0].Ref.GetObjectType().Ref.Strength;
+
+                pSurface.Ref.DrawText($"{health} / {strength}", Location.X + 10, Location.Y + 70, (59, 117, 75));
+                pSurface.Ref.FillRect((Location.X + 10, Location.Y + 90, 200, 5), Drawing.Color16bit((61, 61, 61)));
+                pSurface.Ref.FillRect((Location.X + 10, Location.Y + 90, (int)(health * 200 / strength), 5)
+                    , Drawing.Color16bit((59, 117, 75)));
+
+
+                RectangleStruct rect1 = (Location.X + 85, Location.Y + 15, 60, 48);
+                RectangleStruct rect2 = (Location.X + 150, Location.Y + 15, 60, 48);
+
+                Drawer.FillRectBevel(pSurface, rect1, rect1.InRect(mousePos) ? (100, 100, 100) : (61, 61, 61));
+                Drawer.FillRectBevel(pSurface, rect2, rect2.InRect(mousePos) ? (100, 100, 100) : (61, 61, 61));
+
+                if (list.Count == 1)
+                {
+                    list[0].Render(pSurface, Location + (10, 15));
+                }
+                else
+                {
+                    Drawer.FillRectBevel(pSurface, (Location.X + 10, Location.Y + 15, 60, 48), (61, 61, 61));
+                    pSurface.Ref.DrawText("黑暗22", Location.X + 40, Location.Y + 32, (161, 161, 161), TextPrintType.NoShadow | TextPrintType.Center);
+                }
+                return;
+            }
+
+            if (list.Count == 0)
+            {
+                RenderEmpty(pSurface);
+                return;
+            }
+
+
+            Rectangle = RectangleStruct.FromBottomLeft(Rectangle.BottomLeft, (list.Count * 60, 48));
+
+
+            int i = 0;
+            foreach (var p in list)
+            {
+                if (i > maxCount)
+                {
+                    i++;
+                    break;
+                }
                 pos = p.Render(pSurface, pos);
+
+            }
+
+
+            if (IsMouseHoving(mousePos))
+            {
+                int index = (mousePos.X - 1) / 60;
+                pSurface.Ref.DrawRect((index * 60 + 1, Location.Y, 60, 48), Drawing.Color16bit(Drawing.TooltipColor));
+            }
+        }
+
+        public override void OnLeftRelease(Point2D mousePos)
+        {
+            if (ObjectClass.CurrentObjects.Count == 0)
+            {
+                return;
+            }
+
+            List<TypeValuePair> list = Get();
+            if (list.Count == 0)
+            {
+                return;
+            }
+
+            if (list.Count == 1 && ObjectClass.CurrentObjects.Count == 1)
+            {
+                return;
+
+            }
+
+
+            Rectangle = RectangleStruct.FromBottomLeft(Rectangle.BottomLeft, (list.Count * 60, 48));
+
+            bool ctrl = InputManager.IsForceFireKeyPressed();
+
+            if (IsMouseHoving(mousePos))
+            {
+                int index = (mousePos.X - 1) / 60;
+
+                var array = ObjectClass.CurrentObjects.Where(o =>
+                {
+
+                    if (o.IsNotNull && o.CastToTechno(out Pointer<TechnoClass> pTechno))
+                    {
+                        bool sth = pTechno.Ref.Type == list[index].GetTechnoType();
+
+                        return ctrl ? !sth : sth;
+                    }
+                    return false;
+                }).Select(o => o.Convert<TechnoClass>()).ToArray();
+
+                MapClass.Instance.SetTogglePowerMode(0);
+                MapClass.Instance.SetWaypointMode(0);
+                MapClass.Instance.SetRepairMode(0);
+                MapClass.Instance.SetSellMode(0);
+
+                MapClass.UnselectAll();
+
+                foreach (var item in array)
+                {
+                    item.Ref.Base.Select();
+                }
             }
         }
 
@@ -127,12 +261,12 @@ namespace Extension.Cylearun.UI
             }
             if (Num > 1)
             {
-                //string str = Num.ToString();
-                //var lenstr = Surface.GetTextDimension(str, 60);
-                //Point2D textPos = new Point2D(pos.X + 60 - lenstr - 3, pos.Y);
-                //RectangleStruct rect = new RectangleStruct(pos.X + 60 - lenstr - 6, pos.Y, lenstr + 6, 17);
-                //pSurface.Ref.FillRect(rect, 0);
-                //pSurface.Ref.DrawText(str, Pointer<Point2D>.AsPointer(ref textPos), Drawing.TooltipColor);
+                string str = Num.ToString();
+                var lenstr = Surface.GetTextDimension(str, 60);
+                Point2D textPos = new Point2D(pos.X + 60 - lenstr - 3, pos.Y);
+                RectangleStruct rect = new RectangleStruct(pos.X + 60 - lenstr - 6, pos.Y, lenstr + 6, 17);
+                pSurface.Ref.FillRect(rect, 0);
+                pSurface.Ref.DrawText(str, Pointer<Point2D>.AsPointer(ref textPos), Drawing.TooltipColor);
 
             }
 
