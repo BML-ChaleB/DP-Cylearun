@@ -306,7 +306,10 @@ namespace Scripts
                 }
             }
 
-            Owner.OwnerObject.Ref.Base.Mark(MarkType.UP);
+            if(Defination.MarkUp)
+            {
+                Owner.OwnerObject.Ref.Base.Mark(MarkType.UP);
+            }
 
             //同步位置
             var location = ExHelper.GetFLHAbsoluteCoords(Master.OwnerObject, Position, Defination.BindTurret);
@@ -668,6 +671,10 @@ namespace Scripts
         [INIField(Key = "ExtraUnit.BindType")]
         public string BindType = string.Empty;
 
+        [INIField(Key = "ExtraUnit.MarkUp")]
+
+        public bool MarkUp = true;
+
         public ExtraUnitDefinationPoco Copy()
         {
             return new ExtraUnitDefinationPoco()
@@ -685,7 +692,8 @@ namespace Scripts
                 ForceSameFacing = this.ForceSameFacing,
                 ForceFacingAllowAngle = this.ForceFacingAllowAngle,
                 WorkingHeight = this.WorkingHeight,
-                BindType = this.BindType
+                BindType = this.BindType,
+                MarkUp = this.MarkUp
             };
         }
     }
@@ -765,6 +773,8 @@ namespace Scripts
         public int WorkingHeight = 0;
 
         public string BindType = string.Empty;
+
+        public bool MarkUp = true;
 
     }
 
