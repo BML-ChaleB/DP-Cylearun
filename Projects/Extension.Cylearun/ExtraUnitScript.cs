@@ -700,7 +700,8 @@ namespace Scripts
                 ForceFacingAllowAngle = this.ForceFacingAllowAngle,
                 WorkingHeight = this.WorkingHeight,
                 BindType = this.BindType,
-                MarkUp = this.MarkUp
+                MarkUp = this.MarkUp,
+                TransferSelect = this.TransferSelect
             };
         }
     }
