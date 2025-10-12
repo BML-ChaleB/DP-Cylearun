@@ -326,15 +326,18 @@ namespace Scripts
             }
 
 
-
-            //传递select
-            if (Owner.OwnerObject.Ref.Base.IsSelected == true)
+            if (Defination.TransferSelect)
             {
-                Owner.OwnerObject.Ref.Base.Deselect();
-                if (!Master.OwnerObject.Ref.Base.IsSelected)
+                //传递select
+                if (Owner.OwnerObject.Ref.Base.IsSelected == true)
                 {
-                    Master.OwnerObject.Ref.Base.Select();
+                    Owner.OwnerObject.Ref.Base.Deselect();
+                    if (!Master.OwnerObject.Ref.Base.IsSelected)
+                    {
+                        Master.OwnerObject.Ref.Base.Select();
+                    }
                 }
+
             }
 
             var target = Master.OwnerObject.Ref.Target;
@@ -675,6 +678,10 @@ namespace Scripts
 
         public bool MarkUp = true;
 
+        [INIField(Key = "ExtraUnit.TransferSelect")]
+
+        public bool TransferSelect = true;
+
         public ExtraUnitDefinationPoco Copy()
         {
             return new ExtraUnitDefinationPoco()
@@ -775,6 +782,8 @@ namespace Scripts
         public string BindType = string.Empty;
 
         public bool MarkUp = true;
+
+        public bool TransferSelect = true;
 
     }
 
