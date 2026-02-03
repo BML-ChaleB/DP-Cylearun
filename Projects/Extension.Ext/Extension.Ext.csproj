@@ -51,6 +51,7 @@
     <Compile Include="BulletTypeExt.cs" />
     <Compile Include="CellExt.cs" />
     <Compile Include="HouseExt.cs" />
+    <Compile Include="HouseExtCY.cs" />
     <Compile Include="HouseTypeExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SuperWeaponExt.cs" />
