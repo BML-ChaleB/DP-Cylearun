@@ -47,9 +47,52 @@ namespace Scripts.AE
                     if (shouldConvert && !placed)
                     {
                         var coord = Owner.OwnerObject.Ref.Base.Base.GetCoords();
-                        Owner.OwnerObject.Ref.Base.Remove();
-                        TechnoPlacer.PlaceTechnoNear(TechnoTypeClass.ABSTRACTTYPE_ARRAY.Find(ini.Data.ConvertTo), Owner.OwnerObject.Ref.Owner,CellClass.Coord2Cell(coord),ini.Data.BuildUp);
+
+                        var cell = CellClass.Coord2Cell(coord);
+
+                        if (!string.IsNullOrWhiteSpace(ini.Data.Offset))
+                        {
+                            var offsetStr = ini.Data.Offset;
+                            var offset = offsetStr.Split(',').Select(x => int.Parse(x)).ToList();
+                            cell = cell + new CellStruct(offset[0], offset[1]);
+                        }
+
+                        var health = Owner.OwnerObject.Ref.Base.Health;
+                        var strength = Owner.OwnerObject.Ref.Type.Ref.Base.Strength;
+                        var veterancy = Owner.OwnerObject.Ref.Veterancy.Veterancy;
+
+                        var type = TechnoTypeClass.ABSTRACTTYPE_ARRAY.Find(ini.Data.ConvertTo);
+                        var techno = type.Ref.Base.CreateObject(Owner.OwnerObject.Ref.Owner).Convert<TechnoClass>();
+
+                        var placeResult = TechnoPlacer.PlaceTechnoNear(techno,cell,ini.Data.BuildUp);
                         placed = true;
+                        if(ini.Data.Inhert && placeResult)
+                        {
+                            techno.Ref.Veterancy.Veterancy = veterancy;
+                            techno.Ref.Base.Health = (int)Math.Round(techno.Ref.Type.Ref.Base.Strength * ((double)health / (double)strength));
+
+                            var passengers = new List<Pointer<FootClass>>();
+
+                            if (Owner.OwnerObject.Ref.Passengers.NumPassengers > 0) 
+                            {
+                                while(Owner.OwnerObject.Ref.Passengers.GetFirstPassenger().IsNotNull)
+                                {
+                                    var pfoot = Owner.OwnerObject.Ref.Passengers.GetFirstPassenger();
+                                    Owner.OwnerObject.Ref.Passengers.RemoveFirstPassenger();
+                                    passengers.Add(pfoot);
+                                }
+
+                                if (passengers.Count > 0) 
+                                {
+                                    passengers.Reverse();
+                                    foreach (var passenger in passengers)
+                                    {
+                                        techno.Ref.AddPassenger(passenger);
+                                    }
+                                }
+                            }
+
+                        }
                         Owner.OwnerObject.Ref.Base.UnInit();
                     }
                 }
@@ -80,5 +123,13 @@ namespace Scripts.AE
 
         [INIField(Key = "AttachEffectScript.BuildUp")]
         public bool BuildUp = true;
+
+        [INIField(Key = "AttachEffectScript.Offset")]
+        public string Offset = string.Empty;
+        /// <summary>
+        /// 是否继承血量等级
+        /// </summary>
+        [INIField(Key = "AttachEffectScript.Inhert")]
+        public bool Inhert = true;
     }
 }
