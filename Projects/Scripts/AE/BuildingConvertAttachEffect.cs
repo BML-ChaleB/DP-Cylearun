@@ -1,4 +1,5 @@
-﻿using Extension.Ext;
+﻿using DynamicPatcher;
+using Extension.Ext;
 using Extension.INI;
 using Extension.Script;
 using PatcherYRpp;
@@ -63,8 +64,9 @@ namespace Scripts.AE
 
                         var type = TechnoTypeClass.ABSTRACTTYPE_ARRAY.Find(ini.Data.ConvertTo);
                         var techno = type.Ref.Base.CreateObject(Owner.OwnerObject.Ref.Owner).Convert<TechnoClass>();
-
+                        Owner.OwnerObject.Ref.Base.Remove();
                         var placeResult = TechnoPlacer.PlaceTechnoNear(techno,cell,ini.Data.BuildUp);
+                        Logger.Log($"结果:{placeResult}");
                         placed = true;
                         if(ini.Data.Inhert && placeResult)
                         {
