@@ -115,7 +115,7 @@ namespace Scripts.TestScripts
             Logger.Log($"能影响的阵营数量:{targetHouseList.Count}");
             for (int i = 0; i < targetHouseList.Count; i++)
             {
-                Pointer<HouseClass> targetHouse = HouseClass.FindByIndex(targetHouseList[i]);
+                Pointer<HouseClass> targetHouse = HouseClass.Array[targetHouseList[i]];
                 String houseName = targetHouse.Ref.Type.Ref.Base.ID.ToString();
                 Logger.Log($"能影响的阵营:{houseName}");
             }
@@ -125,7 +125,7 @@ namespace Scripts.TestScripts
             {
                 for (int i = 0; i < targetHouseList.Count; i++)
                 {
-                    Pointer<HouseClass> targetHouse = HouseClass.FindByIndex(targetHouseList[i]);
+                    Pointer<HouseClass> targetHouse = HouseClass.Array[targetHouseList[i]];
                     Pointer<SuperClass> pSuper = targetHouse.Ref.FindSuperWeapon(type);
                     //是否包含在标签限制的超武中
                     if (!effectSWList.Contains(type.Ref.Base.ID))
