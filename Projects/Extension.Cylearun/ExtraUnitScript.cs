@@ -177,6 +177,7 @@ namespace Scripts
             {
                 if (!salve.IsNullOrExpired())
                 {
+                    salve.OwnerObject.Ref.Stun();
                     salve.OwnerObject.Ref.Base.Remove();
                     salve.OwnerObject.Ref.Base.RegisterKill(Owner.OwnerObject.Ref.Owner);
                     salve.OwnerObject.Ref.Base.UnInit();
