@@ -1,18 +1,19 @@
-﻿using Extension.CWUtilities;
+﻿using DynamicPatcher;
+using Extension.CWUtilities;
+using Extension.Cylearun.Utils;
+using Extension.EventSystems;
 using Extension.Ext;
 using Extension.INI;
 using Extension.Script;
 using Extension.Utilities;
 using PatcherYRpp;
+using PatcherYRpp.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using DynamicPatcher;
-using PatcherYRpp.Utilities;
-using System.Reflection;
-using Extension.Cylearun.Utils;
 
 namespace Scripts
 {
@@ -173,7 +174,26 @@ namespace Scripts
                 return;
             }
 
-            foreach (var salve in salveTechnos)
+            EventSystem.General.AddTemporaryHandler(EventSystem.General.LogicClassUpdateEvent, ClearSalves);
+        
+        }
+
+        public void ClearSalves(object sender,EventArgs args)
+        {
+            if (args is LogicClassUpdateEventArgs largs)
+            {
+                if (!largs.IsLateUpdate)
+                    return;
+            }
+            else
+            {
+                return;
+            }
+
+            var salvesToClean = salveTechnos.ToList();
+
+
+            foreach (var salve in salvesToClean)
             {
                 if (!salve.IsNullOrExpired())
                 {
@@ -183,6 +203,8 @@ namespace Scripts
                     salve.OwnerObject.Ref.Base.UnInit();
                 }
             }
+
+            EventSystem.General.RemoveTemporaryHandler(EventSystem.General.LogicClassUpdateEvent, ClearSalves);
         }
 
         public override void OnRemove()
