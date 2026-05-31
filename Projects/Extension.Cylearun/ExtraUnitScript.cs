@@ -195,7 +195,7 @@ namespace Scripts
 
             foreach (var salve in salvesToClean)
             {
-                if (!salve.IsNullOrExpired())
+                if (!salve.IsNullOrExpired() && salve.OwnerObject != null)
                 {
                     salve.OwnerObject.Ref.Stun();
                     salve.OwnerObject.Ref.Base.Remove();
